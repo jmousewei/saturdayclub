@@ -1,0 +1,4 @@
+D:\saturdayclub\saturdayclub\saturdayclub\bin\saturdayclub.dll
+D:\saturdayclub\saturdayclub\saturdayclub\bin\saturdayclub.pdb
+D:\saturdayclub\saturdayclub\saturdayclub\obj\Debug\saturdayclub.dll
+D:\saturdayclub\saturdayclub\saturdayclub\obj\Debug\saturdayclub.pdb
