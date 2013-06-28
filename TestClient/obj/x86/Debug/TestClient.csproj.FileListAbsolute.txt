@@ -1,0 +1,8 @@
+D:\saturdayclub\saturdayclub\TestClient\bin\Debug\send.xml
+D:\saturdayclub\saturdayclub\TestClient\bin\Debug\TestClient.exe
+D:\saturdayclub\saturdayclub\TestClient\bin\Debug\TestClient.pdb
+D:\saturdayclub\saturdayclub\TestClient\obj\x86\Debug\TestClient.exe
+D:\saturdayclub\saturdayclub\TestClient\obj\x86\Debug\TestClient.pdb
+D:\saturdayclub\saturdayclub\TestClient\bin\Debug\saturdayclub.Messages.dll
+D:\saturdayclub\saturdayclub\TestClient\bin\Debug\saturdayclub.Messages.pdb
+D:\saturdayclub\saturdayclub\TestClient\obj\x86\Debug\TestClient.csprojResolveAssemblyReference.cache

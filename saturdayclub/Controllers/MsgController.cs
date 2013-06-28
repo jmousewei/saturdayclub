@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using saturdayclub.Messages;
 
 namespace saturdayclub.Controllers
 {
@@ -12,37 +13,11 @@ namespace saturdayclub.Controllers
     {
         public static readonly string MessageToken = "saturdayclub_chenwei";
 
-        private bool ValidSignature(string signature, string timestamp, string nonce)
+        [ActionName("test")]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Test()
         {
-            bool checkResult = false;
-            do
-            {
-                if (string.IsNullOrEmpty(signature) ||
-                    string.IsNullOrEmpty(timestamp) ||
-                    string.IsNullOrEmpty(nonce))
-                {
-                    break;
-                }
-
-                string[] param = new[] { MessageToken, timestamp, nonce };
-                Array.Sort<string>(param);
-                string hashParam = string.Join(string.Empty, param);
-                byte[] buf = Encoding.UTF8.GetBytes(hashParam);
-                using (var sha1 = SHA1.Create())
-                {
-                    var hash = sha1.ComputeHash(buf);
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var b in hash)
-                    {
-                        if (b < 0x10)
-                            sb.Append('0');
-                        sb.AppendFormat("{0:x}", b);
-                    }
-                    string hashStr = sb.ToString();
-                    checkResult = (string.Compare(signature, hashStr, true) == 0);
-                }
-            } while (false);
-            return checkResult;
+            return View("test");
         }
 
         //
@@ -53,10 +28,10 @@ namespace saturdayclub.Controllers
         public ActionResult Valid(string signature, string timestamp, string nonce, string echostr)
         {
             ActionResult result = Content("Please visit via your WeiXin client.");
-            if (ValidSignature(signature, timestamp, nonce))
+            if (MessageValidator.ValidateChecksum(signature, MessageToken, timestamp, nonce))
             {
                 result = Content(echostr);
-            }                
+            }
             return result;
         }
 
@@ -64,7 +39,24 @@ namespace saturdayclub.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult TranslateMessage()
         {
+            try
+            {
+                ClientTextMessage msg = new ClientTextMessage();
+                msg.Deserialize(this.Request.InputStream);
+                ReplyTextMessage reply = new ReplyTextMessage()
+                {
+                    To = msg.From,
+                    From = msg.To,
+                    CreateTime = ReplyTextMessage.Time(),
+                    Content = "This is a reply test.",
+                    Functions = FunctionFlags.None
+                };
+                return Content(reply.GetMessageContent());
+            }
+            catch
+            {
 
+            }
             return new EmptyResult();
         }
 

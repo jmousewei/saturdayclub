@@ -17,10 +17,24 @@ namespace saturdayclub
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "Default", // Route name
-                "{controller}", // URL with parameters
-                new { controller = "Msg", action = "valid" } // Parameter defaults
+                "DefaultGet",
+                "{action}",
+                new { controller = "Msg", action = "valid" },
+                new { httpMethod = new HttpMethodConstraint("GET") }
             );
+
+            routes.MapRoute(
+                "DefaultPost",
+                "{action}",
+                new { controller = "Msg", action = "trans" },
+                new { httpMethod = new HttpMethodConstraint("POST") }
+            );
+
+            //routes.MapRoute(
+            //    "Default", // Route name
+            //    "{controller}", // URL with parameters
+            //    new { controller = "Msg", action = "valid" } // Parameter defaults
+            //);
 
         }
 
