@@ -48,7 +48,7 @@ namespace saturdayclub.Controllers
                     To = msg.From,
                     From = msg.To,
                     CreateTime = ReplyTextMessage.Time(),
-                    Content = "This is a reply test.",
+                    Content = "Hello, I'm a repeater, and I will repeat every ur msg! Your msg is: " + msg.Content,
                     Functions = FunctionFlags.None
                 };
                 return Content(reply.GetMessageContent());
