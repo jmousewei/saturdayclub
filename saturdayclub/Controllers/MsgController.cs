@@ -10,7 +10,7 @@ namespace saturdayclub.Controllers
 {
     public class MsgController : Controller
     {
-        public static readonly string MessageToken = "saturdayclub";
+        public static readonly string MessageToken = "saturdayclub_chenwei";
 
         //
         // GET: /Msg/
