@@ -12,20 +12,14 @@ namespace saturdayclub.Controllers
     {
         public static readonly string MessageToken = "saturdayclub_chenwei";
 
-        //
-        // GET: /Msg/
-
-        [ActionName("valid")]
-        [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Valid(string signature, string timestamp, string nonce, string echostr)
+        private bool ValidSignature(string signature, string timestamp, string nonce)
         {
-            ActionResult result = Content("Please visit via your WeiXin client.");
+            bool checkResult = false;
             do
             {
                 if (string.IsNullOrEmpty(signature) ||
                     string.IsNullOrEmpty(timestamp) ||
-                    string.IsNullOrEmpty(nonce) ||
-                    string.IsNullOrEmpty(echostr))
+                    string.IsNullOrEmpty(nonce))
                 {
                     break;
                 }
@@ -45,14 +39,33 @@ namespace saturdayclub.Controllers
                         sb.AppendFormat("{0:x}", b);
                     }
                     string hashStr = sb.ToString();
-                    if (string.Compare(signature, hashStr, true) == 0)
-                    {
-                        result = Content(echostr);
-                    }
+                    checkResult = (string.Compare(signature, hashStr, true) == 0);
                 }
-
             } while (false);
+            return checkResult;
+        }
+
+        //
+        // GET: /Msg/
+
+        [ActionName("valid")]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Valid(string signature, string timestamp, string nonce, string echostr)
+        {
+            ActionResult result = Content("Please visit via your WeiXin client.");
+            if (ValidSignature(signature, timestamp, nonce))
+            {
+                result = Content(echostr);
+            }                
             return result;
+        }
+
+        [ActionName("trans")]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult TranslateMessage()
+        {
+
+            return new EmptyResult();
         }
 
     }
