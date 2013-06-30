@@ -43,10 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventMessage.cs" />
     <Compile Include="FunctionFlags.cs" />
     <Compile Include="IMessage.cs" />
+    <Compile Include="MessageEvents.cs" />
     <Compile Include="MessageTypes.cs" />
-    <Compile Include="MessageValidator.cs" />
+    <Compile Include="RequestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClientTextMessage.cs" />
     <Compile Include="ReplyTextMessage.cs" />

@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace saturdayclub.Messages
 {
-    public static class MessageValidator
+    public static class RequestHelper
     {
         public static string ComputeChecksum(string token, string timestamp, string nonce)
         {

@@ -81,13 +81,7 @@ namespace saturdayclub.Messages
 
         public string GetMessageContent()
         {
-            int ndx = (int)this.MessageType;
-            var names = Enum.GetNames(typeof(MessageTypes));
-            if (ndx < 0 || ndx > names.Length)
-            {
-                throw new InvalidOperationException("Invalid message type.");
-            }
-            string name = names[ndx].ToLower();
+            string name = this.MessageType.ToString().ToLower();
             var node = this.doc.Element("xml").Element("MsgType").DescendantNodes().OfType<XCData>().First();
             node.Value = name;
             return this.doc.ToString();
@@ -146,6 +140,79 @@ namespace saturdayclub.Messages
         {
             return GetMessageContent();
         }
+
+        private static MessageTypes NativeGetMessageType(XDocument xdoc)
+        {
+            var typeName = xdoc.Element("xml").Element("MsgType").DescendantNodes().OfType<XCData>().First().Value;
+            MessageTypes type = typeName.ToEnum<MessageTypes>();
+            return type;
+        }
+
+        public static MessageTypes GetMessageType(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            var xdoc = XDocument.Load(stream);
+            return NativeGetMessageType(xdoc);
+        }
+
+        public static T Deserialize<T>(Stream stream) where T : XmlMessage, new()
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            var xdoc = XDocument.Load(stream);
+            T newObj = new T();
+            newObj.doc = xdoc;
+            return null;
+        }
+
+        public static XmlMessage CreateClient(MessageTypes type)
+        {
+            switch (type)
+            {
+                case MessageTypes.Text:
+                    return new ClientTextMessage();
+                default:
+                    return null;
+            }
+        }
+
+        public static XmlMessage CreateClient(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            XDocument xdoc = XDocument.Load(stream);
+            var type = NativeGetMessageType(xdoc);
+            var newObj = CreateClient(type);
+            if (newObj == null)
+                return null;
+            newObj.doc = xdoc;
+            return newObj;
+        }
+
+        public static XmlMessage CreateReply(MessageTypes type)
+        {
+            switch (type)
+            {
+                case MessageTypes.Text:
+                    return new ReplyTextMessage();
+                default:
+                    return null;
+            }
+        }
+
+        public static XmlMessage CreateReply(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            XDocument xdoc = XDocument.Load(stream);
+            var type = NativeGetMessageType(xdoc);
+            var newObj = CreateReply(type);
+            if (newObj == null)
+                return null;
+            newObj.doc = xdoc;
+            return newObj;
+        }
     }
 
     public static class XmlMessageHelper
@@ -155,6 +222,16 @@ namespace saturdayclub.Messages
             var content = msg.GetMessageContent();
             var bytes = XmlMessage.ContentEncoding.GetBytes(content);
             return bytes;
+        }
+
+        public static TEnum ToEnum<TEnum>(this string reference) where TEnum : struct
+        {
+            TEnum value;
+            if (Enum.TryParse<TEnum>(reference, true, out value))
+            {
+                return value;
+            }
+            return default(TEnum);
         }
     }
 }
