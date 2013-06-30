@@ -8,6 +8,7 @@ using System.Text;
 using saturdayclub.Messages;
 using saturdayclub.Analyze;
 using System.Threading;
+using System.Diagnostics;
 
 namespace saturdayclub.Controllers
 {
@@ -19,7 +20,42 @@ namespace saturdayclub.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Test()
         {
-            return View("test");
+            Stopwatch sw = new Stopwatch();
+            sw.Restart();
+            string replyMsg = string.Empty;
+            try
+            {
+                using (var context = new AnalyzeContext())
+                {
+                    ActivityAnalyzer analyzer = new ActivityAnalyzer();
+                    AnalyzeToken token = new AnalyzeToken();
+                    using (ManualResetEvent evt = new ManualResetEvent(false))
+                    {
+                        context.RunAsync(() =>
+                        {
+                            token = analyzer.Analyze(null);
+                            evt.Set();
+                        });
+                        if (!evt.WaitOne(20000))
+                        {
+                            throw new TimeoutException("Cannot start new thread!");
+                        }
+                        var result = analyzer.RetrieveResult(token, 20000) as List<string>;
+                        replyMsg = string.Join("; ", result.ToArray());
+                    }
+                    context.Exit();
+                }
+            }
+            catch (Exception ex)
+            {
+                replyMsg = ex.ToString();
+            }
+            if (string.IsNullOrEmpty(replyMsg))
+            {
+                replyMsg = "No activity.";
+            }
+            sw.Stop();
+            return Content(replyMsg + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         //
