@@ -49,9 +49,11 @@ namespace saturdayclub.Controllers
                         HtmlNode temp = HtmlNode.CreateNode(col.OuterHtml);
                         var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
                         string title = node.InnerText.Trim();
+                        node = temp.SelectSingleNode("//li/span[@class='host']/a");
+                        string contact = node.InnerText.Trim();
                         if (!string.IsNullOrEmpty(title))
                         {
-                            activityList.Add(title);
+                            activityList.Add(title + @" (联系人: " + contact + ")");
                         }
                     }
                     StringBuilder sb = new StringBuilder();
