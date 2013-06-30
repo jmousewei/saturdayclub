@@ -50,8 +50,8 @@ namespace saturdayclub
                 "ActivityWatchdog",
                 DateTime.UtcNow,
                 null,
-                DateTime.MaxValue,
-                TimeSpan.FromMinutes(30),
+                DateTime.Now.AddMinutes(30),
+                System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
                 new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
         }

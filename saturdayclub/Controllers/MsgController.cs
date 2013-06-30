@@ -73,7 +73,7 @@ namespace saturdayclub.Controllers
                 "Activities",
                 replyMsg,
                 null,
-                DateTime.MaxValue,
+                System.Web.Caching.Cache.NoAbsoluteExpiration,
                 System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
                 null);
