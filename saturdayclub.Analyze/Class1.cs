@@ -20,58 +20,65 @@ namespace saturdayclub.Analyze
 
         private void OnDocumentLoaded(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            if (string.Compare(e.Url.AbsoluteUri, DefaultPage, false) == 0)
-            {
-                List<string> activityList = new List<string>();
-                WebBrowser browser = sender as WebBrowser;
-                AnalyzeToken token = (AnalyzeToken)browser.Tag;
-                try
-                {
-                    var dom = browser.Document.DomDocument as IHTMLDocument2;
-                    var list = dom.all.item("activities") as IHTMLElement;
-                    var divs = list.all.tags("div") as IHTMLElementCollection;
-                    IHTMLElement body = null;
-                    foreach (IHTMLElement div in divs)
-                    {
-                        if (string.Compare(div.className, "col_body", true) == 0)
-                        {
-                            body = div;
-                            break;
-                        }
-                    }
-                    var uls = body.all.tags("ul") as IHTMLElementCollection;
-                    IHTMLElement ul = null;
-                    foreach (IHTMLElement element in uls)
-                    {
-                        if (string.Compare(element.className, "activities txt_light", true) == 0)
-                        {
-                            ul = element;
-                            break;
-                        }
-                    }
-                    var lis = ul.all.tags("li") as IHTMLElementCollection;
-                    foreach (IHTMLElement li in lis)
-                    {
-                        if (string.Compare(li.className, "head", true) == 0)
-                        {
-                            continue;
-                        }
-                        var spans = li.all.tags("span") as IHTMLElementCollection;
-                        foreach (IHTMLElement span in spans)
-                        {
-                            if (string.Compare(span.className, "theme", true) == 0)
-                            {
-                                var anchor = span.all.tags("a")[0] as IHTMLElement;
-                                activityList.Add(anchor.innerText.Trim());
-                            }
-                        }
-                    }
-                }
-                catch
-                { }
-                SetResult(token, activityList);
-                ((AutoResetEvent)token.Waitable).Set();
-            }
+            List<string> activityList = new List<string>();
+            WebBrowser browser = sender as WebBrowser;
+            AnalyzeToken token = (AnalyzeToken)browser.Tag;
+            SetResult(token, activityList);
+            ((AutoResetEvent)token.Waitable).Set();
+            return;
+
+            //if (string.Compare(e.Url.AbsoluteUri, DefaultPage, false) == 0)
+            //{
+            //    List<string> activityList = new List<string>();
+            //    WebBrowser browser = sender as WebBrowser;
+            //    AnalyzeToken token = (AnalyzeToken)browser.Tag;
+            //    try
+            //    {
+            //        var dom = browser.Document.DomDocument as IHTMLDocument2;
+            //        var list = dom.all.item("activities") as IHTMLElement;
+            //        var divs = list.all.tags("div") as IHTMLElementCollection;
+            //        IHTMLElement body = null;
+            //        foreach (IHTMLElement div in divs)
+            //        {
+            //            if (string.Compare(div.className, "col_body", true) == 0)
+            //            {
+            //                body = div;
+            //                break;
+            //            }
+            //        }
+            //        var uls = body.all.tags("ul") as IHTMLElementCollection;
+            //        IHTMLElement ul = null;
+            //        foreach (IHTMLElement element in uls)
+            //        {
+            //            if (string.Compare(element.className, "activities txt_light", true) == 0)
+            //            {
+            //                ul = element;
+            //                break;
+            //            }
+            //        }
+            //        var lis = ul.all.tags("li") as IHTMLElementCollection;
+            //        foreach (IHTMLElement li in lis)
+            //        {
+            //            if (string.Compare(li.className, "head", true) == 0)
+            //            {
+            //                continue;
+            //            }
+            //            var spans = li.all.tags("span") as IHTMLElementCollection;
+            //            foreach (IHTMLElement span in spans)
+            //            {
+            //                if (string.Compare(span.className, "theme", true) == 0)
+            //                {
+            //                    var anchor = span.all.tags("a")[0] as IHTMLElement;
+            //                    activityList.Add(anchor.innerText.Trim());
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch
+            //    { }
+            //    SetResult(token, activityList);
+            //    ((AutoResetEvent)token.Waitable).Set();
+            //}
         }
 
         protected override void Analyze(AnalyzeToken token)
