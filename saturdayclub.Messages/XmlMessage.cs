@@ -172,6 +172,8 @@ namespace saturdayclub.Messages
             {
                 case MessageTypes.Text:
                     return new ClientTextMessage();
+                case MessageTypes.Event:
+                    return new EventMessage();
                 default:
                     return null;
             }

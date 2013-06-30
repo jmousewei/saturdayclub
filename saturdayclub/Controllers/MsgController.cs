@@ -191,7 +191,7 @@ namespace saturdayclub.Controllers
                             sb.AppendLine();
                             sb.AppendLine(@"1. 直接发送‘帮助’获取当前可用功能列表和说明。");
                             sb.AppendLine(@"2. 直接发送‘查活动’获取当前活动列表。活动列表每30分钟自动更新，所以您可能获取的不是最新的列表。");
-                            sb.AppendLine(@"3. 直接发送任意文字、基础表情获取系统测试性回复");
+                            sb.AppendLine(@"3. 直接发送任意文字、基础表情获取系统测试性回复。");
                             replyMsgContent = sb.ToString();
                         }
                         else
