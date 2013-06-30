@@ -52,7 +52,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -142,10 +141,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\saturdayclub.Analyze\saturdayclub.Analyze.csproj">
-      <Project>{5c4d8dd4-b357-44fa-ae85-6ea842e02998}</Project>
-      <Name>saturdayclub.Analyze</Name>
-    </ProjectReference>
     <ProjectReference Include="..\saturdayclub.Messages\saturdayclub.Messages.csproj">
       <Project>{7ced1b24-40dd-4d95-8140-c7b9a8893e4f}</Project>
       <Name>saturdayclub.Messages</Name>
