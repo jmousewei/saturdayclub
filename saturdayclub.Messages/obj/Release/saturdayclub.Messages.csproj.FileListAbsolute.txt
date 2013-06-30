@@ -1,0 +1,4 @@
+D:\saturdayclub\saturdayclub.Messages\bin\Release\saturdayclub.Messages.dll
+D:\saturdayclub\saturdayclub.Messages\bin\Release\saturdayclub.Messages.pdb
+D:\saturdayclub\saturdayclub.Messages\obj\Release\saturdayclub.Messages.dll
+D:\saturdayclub\saturdayclub.Messages\obj\Release\saturdayclub.Messages.pdb

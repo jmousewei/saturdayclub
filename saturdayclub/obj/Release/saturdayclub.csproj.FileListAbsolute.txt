@@ -22,10 +22,6 @@ D:\saturdayclub\saturdayclub\bin\System.Web.Razor.xml
 D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.xml
 D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Deployment.xml
 D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Razor.xml
-D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.csprojResolveAssemblyReference.cache
-D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.dll
-D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.pdb
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.dll
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.dll
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.xml
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.xml
+D:\saturdayclub\saturdayclub\obj\Release\saturdayclub.csprojResolveAssemblyReference.cache
+D:\saturdayclub\saturdayclub\obj\Release\saturdayclub.dll
+D:\saturdayclub\saturdayclub\obj\Release\saturdayclub.pdb
