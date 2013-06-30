@@ -15,3 +15,6 @@ D:\saturdayclub\TestClient\bin\Debug\saturdayclub.Messages.pdb
 D:\saturdayclub\TestClient\obj\x86\Debug\TestClient.csprojResolveAssemblyReference.cache
 D:\saturdayclub\TestClient\obj\x86\Debug\TestClient.exe
 D:\saturdayclub\TestClient\obj\x86\Debug\TestClient.pdb
+D:\saturdayclub\TestClient\bin\Debug\HtmlAgilityPack.dll
+D:\saturdayclub\TestClient\bin\Debug\HtmlAgilityPack.pdb
+D:\saturdayclub\TestClient\bin\Debug\HtmlAgilityPack.xml

@@ -10,6 +10,7 @@ using saturdayclub.Analyze;
 using System.Threading;
 using System.Diagnostics;
 using System.Net;
+using HtmlAgilityPack;
 
 namespace saturdayclub.Controllers
 {
@@ -70,8 +71,24 @@ namespace saturdayclub.Controllers
             {
                 wc.Encoding = Encoding.GetEncoding("GBK");
                 replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
-                replyMsg = Server.HtmlEncode(replyMsg);
-                //replyMsg = replyMsg.IndexOf(@"花开白草畔").ToString();
+                //replyMsg = Server.HtmlEncode(replyMsg);
+
+                List<string> activityList = new List<string>();
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(replyMsg);
+                var root = doc.GetElementbyId("activities");
+                var table = root.SelectNodes("//div[@class='col_body']/ul[@class='activities txt_light']/li[@class!='head']");
+                foreach (var col in table)
+                {
+                    HtmlNode temp = HtmlNode.CreateNode(col.OuterHtml);
+                    var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
+                    string title = node.InnerText.Trim();
+                    if (!string.IsNullOrEmpty(title))
+                    {
+                        activityList.Add(title);
+                    }
+                }
+                replyMsg = string.Join("; ", activityList.ToArray());
             }
             sw.Stop();
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
@@ -99,25 +116,28 @@ namespace saturdayclub.Controllers
             string replyMsg = string.Empty;
             try
             {
-                using (var context = new AnalyzeContext())
+                using (WebClient wc = new WebClient())
                 {
-                    ActivityAnalyzer analyzer = new ActivityAnalyzer();
-                    AnalyzeToken token = new AnalyzeToken();
-                    using (ManualResetEvent evt = new ManualResetEvent(false))
+                    wc.Encoding = Encoding.GetEncoding("GBK");
+                    replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
+                    //replyMsg = Server.HtmlEncode(replyMsg);
+
+                    List<string> activityList = new List<string>();
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(replyMsg);
+                    var root = doc.GetElementbyId("activities");
+                    var table = root.SelectNodes("//div[@class='col_body']/ul[@class='activities txt_light']/li[@class!='head']");
+                    foreach (var col in table)
                     {
-                        context.RunAsync(() =>
+                        HtmlNode temp = HtmlNode.CreateNode(col.OuterHtml);
+                        var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
+                        string title = node.InnerText.Trim();
+                        if (!string.IsNullOrEmpty(title))
                         {
-                            token = analyzer.Analyze(null);
-                            evt.Set();
-                        });
-                        if (!evt.WaitOne(1500))
-                        {
-                            throw new TimeoutException("Cannot start new thread!");
+                            activityList.Add(title);
                         }
-                        var result = analyzer.RetrieveResult(token, 500) as List<string>;
-                        replyMsg = string.Join("; ", result.ToArray());           
                     }
-                    context.Exit();
+                    replyMsg = string.Join("; ", activityList.ToArray());
                 }
             }
             catch(Exception ex)
