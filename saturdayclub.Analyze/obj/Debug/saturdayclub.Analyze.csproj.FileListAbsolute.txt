@@ -1,0 +1,5 @@
+D:\saturdayclub\saturdayclub.Analyze\bin\Debug\saturdayclub.Analyze.dll
+D:\saturdayclub\saturdayclub.Analyze\bin\Debug\saturdayclub.Analyze.pdb
+D:\saturdayclub\saturdayclub.Analyze\obj\Debug\saturdayclub.Analyze.csproj.ResolveComReference.cache
+D:\saturdayclub\saturdayclub.Analyze\obj\Debug\saturdayclub.Analyze.dll
+D:\saturdayclub\saturdayclub.Analyze\obj\Debug\saturdayclub.Analyze.pdb

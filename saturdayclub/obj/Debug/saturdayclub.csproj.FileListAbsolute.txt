@@ -27,3 +27,5 @@ D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Razor.xml
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.csprojResolveAssemblyReference.cache
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.dll
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.pdb
+D:\saturdayclub\saturdayclub\bin\saturdayclub.Analyze.dll
+D:\saturdayclub\saturdayclub\bin\saturdayclub.Analyze.pdb

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 using saturdayclub.Messages;
+using saturdayclub.Analyze;
+using System.Threading;
 
 namespace saturdayclub.Controllers
 {
@@ -39,6 +41,35 @@ namespace saturdayclub.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult TranslateMessage()
         {
+            string replyMsg = string.Empty;
+            try
+            {
+                using (var context = new AnalyzeContext())
+                {
+                    ActivityAnalyzer analyzer = new ActivityAnalyzer();
+                    AnalyzeToken token = new AnalyzeToken();
+                    using (ManualResetEvent evt = new ManualResetEvent(false))
+                    {
+                        context.RunAsync(() =>
+                        {
+                            token = analyzer.Analyze(null);
+                            evt.Set();
+                        });
+                        evt.WaitOne();
+                        var result = analyzer.RetrieveResult(token) as List<string>;
+                        replyMsg = string.Join("; ", result.ToArray());           
+                    }
+                    context.Exit();
+                }
+            }
+            catch(Exception ex)
+            {
+                replyMsg = ex.ToString();
+            }
+            if (string.IsNullOrEmpty(replyMsg))
+            {
+                replyMsg = "No activity.";
+            }
             try
             {
                 ClientTextMessage msg = new ClientTextMessage();
@@ -48,15 +79,14 @@ namespace saturdayclub.Controllers
                     To = msg.From,
                     From = msg.To,
                     CreateTime = ReplyTextMessage.Time(),
-                    Content = "Hello, I'm a repeater, and I will repeat every ur msg! Your msg is: '" + msg.Content + "' in encoding of '" + this.Request.ContentEncoding.EncodingName + "'.",
+                    //Content = "Hello, I'm a repeater, and I will repeat every ur msg! Your msg is: '" + msg.Content + "' in encoding of '" + this.Request.ContentEncoding.EncodingName + "'.",
+                    Content = replyMsg.Length + ": " + replyMsg,
                     Functions = FunctionFlags.None
                 };
                 return Content(reply.GetMessageContent());
             }
             catch
-            {
-
-            }
+            { }
             return new EmptyResult();
         }
 
