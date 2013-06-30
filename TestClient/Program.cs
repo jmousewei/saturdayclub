@@ -31,26 +31,29 @@ namespace TestClient
 
             //var response = httpPost.GetResponse();
 
-            string replyMsg = string.Empty;
-            using (WebClient wc = new WebClient())
-            {
-                wc.Encoding = Encoding.GetEncoding("GBK");
-                replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
-                //replyMsg = Server.HtmlEncode(replyMsg);
+            //string replyMsg = string.Empty;
+            //using (WebClient wc = new WebClient())
+            //{
+            //    wc.Encoding = Encoding.GetEncoding("GBK");
+            //    replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
+            //    //replyMsg = Server.HtmlEncode(replyMsg);
 
-                List<string> activityList = new List<string>();
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(replyMsg);
-                var root = doc.GetElementbyId("activities");
-                var table = root.SelectNodes("//div[@class='col_body']/ul[@class='activities txt_light']/li[@class!='head']");
-                foreach (var col in table)
-                {
-                    HtmlNode temp = HtmlNode.CreateNode(col.OuterHtml);
-                    var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
-                    activityList.Add(node.InnerText.Trim());
-                }
-            }
-            
+            //    List<string> activityList = new List<string>();
+            //    HtmlDocument doc = new HtmlDocument();
+            //    doc.LoadHtml(replyMsg);
+            //    var root = doc.GetElementbyId("activities");
+            //    var table = root.SelectNodes("//div[@class='col_body']/ul[@class='activities txt_light']/li[@class!='head']");
+            //    foreach (var col in table)
+            //    {
+            //        HtmlNode temp = HtmlNode.CreateNode(col.OuterHtml);
+            //        var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
+            //        activityList.Add(node.InnerText.Trim());
+            //    }
+            //}
+
+
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+            var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzi);
         }
     }
 }

@@ -54,14 +54,28 @@ namespace saturdayclub.Controllers
                             activityList.Add(title);
                         }
                     }
-                    replyMsg = string.Join("; ", activityList.ToArray());
+                    StringBuilder sb = new StringBuilder();
+                    for(int i=0;i<activityList.Count;i++)
+                    {
+                        sb.AppendLine((i + 1) + ". " + activityList[i]);
+                    }
+                    replyMsg = sb.ToString();
                 }
             }
             catch (Exception ex)
             {
                 replyMsg = ex.ToString();
             }
-            HttpContext.Application["Activities"] = replyMsg;
+
+            HttpRuntime.Cache.Add(
+                "Activities",
+                replyMsg,
+                null,
+                DateTime.MaxValue,
+                System.Web.Caching.Cache.NoSlidingExpiration,
+                System.Web.Caching.CacheItemPriority.Normal,
+                null);
+
             sw.Stop();
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
         }
@@ -85,22 +99,33 @@ namespace saturdayclub.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult TranslateMessage()
         {
-            string replyMsg = HttpContext.Application["Activities"] as string;
-            if (string.IsNullOrEmpty(replyMsg))
-            {
-                replyMsg = "No activity.";
-            }
             try
             {
                 ClientTextMessage msg = new ClientTextMessage();
                 msg.Deserialize(this.Request.InputStream);
+                string replyMsg = string.Empty;
+                if (string.Compare(msg.Content, @"查活动", true) == 0)
+                {
+                    replyMsg = HttpRuntime.Cache["Activities"] as string;
+                    if (string.IsNullOrEmpty(replyMsg))
+                    {
+                        replyMsg = "No activity.";
+                    }
+                    DateTime utc = (DateTime)HttpRuntime.Cache["ActivityWatchdog"];
+                    TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+                    var time = TimeZoneInfo.ConvertTimeFromUtc(utc, tzi);
+                    replyMsg = "当前的活动列表: \r\n" + replyMsg + "\r\n\r\n此信息更新于: " + time.ToLongTimeString();
+                }
+                else
+                {
+                    replyMsg = "Hello, I'm a repeater, and I will repeat your every msg! Your msg is: '" + msg.Content + "' in encoding of '" + this.Request.ContentEncoding.EncodingName + "'.";
+                }
                 ReplyTextMessage reply = new ReplyTextMessage()
                 {
                     To = msg.From,
                     From = msg.To,
                     CreateTime = ReplyTextMessage.Time(),
-                    //Content = "Hello, I'm a repeater, and I will repeat every ur msg! Your msg is: '" + msg.Content + "' in encoding of '" + this.Request.ContentEncoding.EncodingName + "'.",
-                    Content = replyMsg.Length + ": " + replyMsg,
+                    Content = "Message Length: " + replyMsg.Length + ", Content: " + replyMsg,
                     Functions = FunctionFlags.None
                 };
                 return Content(reply.GetMessageContent());
