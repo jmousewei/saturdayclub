@@ -50,7 +50,7 @@ namespace saturdayclub.Controllers
                         var node = temp.SelectSingleNode("//li/span[@class='theme']/a");
                         string title = node.InnerText.Trim();
                         node = temp.SelectSingleNode("//li/span[@class='host']/a");
-                        string contact = node.InnerText.Trim();
+                        string contact = SaturdayClubApplication.TranslateToCommonWord(node.InnerText.Trim());
                         if (!string.IsNullOrEmpty(title))
                         {
                             activityList.Add(title + @" (联系人: " + contact + ")");
