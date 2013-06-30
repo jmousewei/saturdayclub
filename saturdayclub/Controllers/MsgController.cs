@@ -69,7 +69,8 @@ namespace saturdayclub.Controllers
             using (WebClient wc = new WebClient())
             {
                 replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
-                replyMsg = replyMsg.IndexOf("花开白草畔").ToString();
+                replyMsg = Server.HtmlEncode(replyMsg);
+                //replyMsg = replyMsg.IndexOf(@"花开白草畔").ToString();
             }
             sw.Stop();
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
