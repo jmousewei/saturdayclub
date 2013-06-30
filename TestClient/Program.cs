@@ -54,6 +54,7 @@ namespace TestClient
 
             TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
             var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzi);
+            var strTime = time.ToString();
         }
     }
 }

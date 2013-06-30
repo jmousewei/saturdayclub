@@ -114,7 +114,7 @@ namespace saturdayclub.Controllers
                     DateTime utc = (DateTime)HttpRuntime.Cache["ActivityWatchdog"];
                     TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
                     var time = TimeZoneInfo.ConvertTimeFromUtc(utc, tzi);
-                    replyMsg = "当前的活动列表: \r\n" + replyMsg + "\r\n\r\n此信息更新于: " + time.ToLongTimeString();
+                    replyMsg = "当前的活动列表: \r\n\r\n" + replyMsg + "\r\n此信息更新于: " + time;
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace saturdayclub.Controllers
                     To = msg.From,
                     From = msg.To,
                     CreateTime = ReplyTextMessage.Time(),
-                    Content = "Message Length: " + replyMsg.Length + ", Content: " + replyMsg,
+                    Content = replyMsg,
                     Functions = FunctionFlags.None
                 };
                 return Content(reply.GetMessageContent());
