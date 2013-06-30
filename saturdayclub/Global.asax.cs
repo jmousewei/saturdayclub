@@ -34,7 +34,7 @@ namespace saturdayclub
                 DateTime.UtcNow,
                 null,
                 DateTime.MaxValue,
-                TimeSpan.FromSeconds(30),
+                TimeSpan.FromMinutes(30),
                 System.Web.Caching.CacheItemPriority.Normal,
                 new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
         }
