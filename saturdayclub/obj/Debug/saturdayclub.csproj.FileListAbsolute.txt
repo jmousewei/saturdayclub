@@ -29,3 +29,4 @@ D:\saturdayclub\saturdayclub\bin\System.Net.Http.dll
 D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.dll
 D:\saturdayclub\saturdayclub\bin\System.Net.Http.xml
 D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.xml
+D:\saturdayclub\saturdayclub\bin\Newtonsoft.Json.dll
