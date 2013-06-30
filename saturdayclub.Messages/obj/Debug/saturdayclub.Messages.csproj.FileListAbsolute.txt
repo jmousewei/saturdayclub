@@ -6,3 +6,4 @@ D:\saturdayclub\saturdayclub.Messages\bin\Debug\saturdayclub.Messages.dll
 D:\saturdayclub\saturdayclub.Messages\bin\Debug\saturdayclub.Messages.pdb
 D:\saturdayclub\saturdayclub.Messages\obj\Debug\saturdayclub.Messages.dll
 D:\saturdayclub\saturdayclub.Messages\obj\Debug\saturdayclub.Messages.pdb
+D:\saturdayclub\saturdayclub.Messages\obj\Debug\saturdayclub.Messages.csprojResolveAssemblyReference.cache

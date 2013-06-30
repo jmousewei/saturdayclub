@@ -1,6 +1,8 @@
 D:\saturdayclub\saturdayclub\bin\saturdayclub.dll
 D:\saturdayclub\saturdayclub\bin\saturdayclub.pdb
 D:\saturdayclub\saturdayclub\bin\Microsoft.Web.Infrastructure.dll
+D:\saturdayclub\saturdayclub\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\saturdayclub\saturdayclub\bin\Newtonsoft.Json.dll
 D:\saturdayclub\saturdayclub\bin\saturdayclub.Messages.dll
 D:\saturdayclub\saturdayclub\bin\System.Net.Http.Formatting.dll
 D:\saturdayclub\saturdayclub\bin\System.Web.Helpers.dll
@@ -12,7 +14,7 @@ D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Deployment.dll
 D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.dll
 D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Razor.dll
 D:\saturdayclub\saturdayclub\bin\saturdayclub.Messages.pdb
-D:\saturdayclub\saturdayclub\bin\Microsoft.Web.Infrastructure.xml
+D:\saturdayclub\saturdayclub\bin\Newtonsoft.Json.xml
 D:\saturdayclub\saturdayclub\bin\System.Net.Http.Formatting.xml
 D:\saturdayclub\saturdayclub\bin\System.Web.Helpers.xml
 D:\saturdayclub\saturdayclub\bin\System.Web.Http.xml
@@ -25,8 +27,3 @@ D:\saturdayclub\saturdayclub\bin\System.Web.WebPages.Razor.xml
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.csprojResolveAssemblyReference.cache
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.dll
 D:\saturdayclub\saturdayclub\obj\Debug\saturdayclub.pdb
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.dll
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.dll
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.xml
-D:\saturdayclub\saturdayclub\bin\System.Net.Http.WebRequest.xml
-D:\saturdayclub\saturdayclub\bin\Newtonsoft.Json.dll
