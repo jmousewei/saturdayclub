@@ -56,7 +56,7 @@ namespace saturdayclub.Controllers
                             evt.Set();
                         });
                         evt.WaitOne();
-                        var result = analyzer.RetrieveResult(token) as List<string>;
+                        var result = analyzer.RetrieveResult(token, 20000) as List<string>;
                         replyMsg = string.Join("; ", result.ToArray());           
                     }
                     context.Exit();
