@@ -9,6 +9,7 @@ using saturdayclub.Messages;
 using saturdayclub.Analyze;
 using System.Threading;
 using System.Diagnostics;
+using System.Net;
 
 namespace saturdayclub.Controllers
 {
@@ -56,6 +57,21 @@ namespace saturdayclub.Controllers
             }
             sw.Stop();
             return Content(replyMsg + " " + sw.ElapsedMilliseconds + " ms.");
+        }
+
+        [ActionName("webclient")]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult WebClientTest()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Restart();
+            string replyMsg = string.Empty;
+            using (WebClient wc = new WebClient())
+            {
+                replyMsg = wc.DownloadString("http://www.niwota.com/quan/13142806");
+            }
+            sw.Stop();
+            return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
         }
 
         //
