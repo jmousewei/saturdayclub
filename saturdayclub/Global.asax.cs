@@ -12,6 +12,23 @@ namespace saturdayclub
     // visit http://go.microsoft.com/?LinkId=9394801
     public class SaturdayClubApplication : System.Web.HttpApplication
     {
+        public static readonly IDictionary<string, string> CommonTranslateTable = new Dictionary<string, string>();
+
+        static SaturdayClubApplication()
+        {
+            CommonTranslateTable[@"梅子"] = @"小妖";
+        }
+
+        public static string TranslateToCommonWord(string word)
+        {
+            string commonWord = string.Empty;
+            if (!CommonTranslateTable.TryGetValue(word, out commonWord))
+            {
+                return word;
+            }
+            return commonWord;
+        }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
