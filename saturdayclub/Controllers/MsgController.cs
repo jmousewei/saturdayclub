@@ -204,25 +204,24 @@ namespace saturdayclub.Controllers
                         var eventMsg = xmlMsg as EventMessage;
                         if (eventMsg.Event == MessageEvents.Subscribe)
                         {
-                            StringBuilder sb = new StringBuilder();
-                            sb.AppendLine(@"欢迎加入星期六测试计划。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"本账户会为您提供基于圈网的功能性服务，不提供任何聊天功能。当然，如果您输入文字刚好是星期六感兴趣的话题，也许您会收到回复。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"为了提高服务质量，您向本账号发送的任何消息将被记录并保留5天时间。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"本账户不会要求您输入任何个人信息（包括您圈网的用户名和密码），如发现有人通过本账户向您索取个人信息，请及时通知开发人员处理。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"加入测试计划代表您同意：");
-                            sb.AppendLine(@"1. 开发人员会在未经通知的情况下向您推送测试消息（包括文字、图文或语音）。");
-                            sb.AppendLine(@"2. 测试系统功能，并反馈任何您所遇到的问题（包括改善建议）。");
-                            sb.AppendLine(@"3. 同意我们的隐私策略。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"您可以向公用账户发送‘帮助’来获取当前可用的功能。注意：任何输入不带引号哦。");
-                            sb.AppendLine(@"感谢您的参与，我们将竭诚为您服务。");
-                            sb.AppendLine();
-                            sb.AppendLine(@"开发团队");
-                            replyMsgContent = sb.ToString();
+                            replyMsgContent = @"<xml>
+ <ToUserName><![CDATA[{0}]]></ToUserName>
+ <FromUserName><![CDATA[{1}]]></FromUserName>
+ <CreateTime>{2}</CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+ <item>
+ <Title><![CDATA[欢迎加入星期六测试计划]]></Title> 
+ <Description><![CDATA[欢迎加入星期六测试计划，本计划旨在为您提供基于圈网的微信服务。]]></Description>
+ <PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/6lTNibbOicPCG0QLEoz2icSXMtI8ET55lyCFx28e092TEqDEPm00YTNUA/0]]></PicUrl>
+ <Url><![CDATA[http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5MDY4ODA3Mw==&appmsgid=10000006&itemidx=1&sign=c9f7aaeb46761ea5bd1b457b2169754e#wechat_redirect]]></Url>
+ </item>
+ </Articles>
+ <FuncFlag>1</FuncFlag>
+ </xml> ";
+                            replyMsgContent = string.Format(replyMsgContent, xmlMsg.From, xmlMsg.To, XmlMessage.Time());
+                            return Content(replyMsgContent);
                         }
                     }
                     else
