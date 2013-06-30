@@ -55,11 +55,11 @@ namespace saturdayclub.Controllers
                             token = analyzer.Analyze(null);
                             evt.Set();
                         });
-                        if (!evt.WaitOne(20000))
+                        if (!evt.WaitOne(500))
                         {
                             throw new TimeoutException("Cannot start new thread!");
                         }
-                        var result = analyzer.RetrieveResult(token, 20000) as List<string>;
+                        var result = analyzer.RetrieveResult(token, 500) as List<string>;
                         replyMsg = string.Join("; ", result.ToArray());           
                     }
                     context.Exit();
