@@ -142,7 +142,7 @@ namespace saturdayclub.Controllers
                 "ActivityWatchdog",
                 DateTime.UtcNow,
                 null,
-                DateTime.Now.AddMinutes(5),
+                DateTime.Now.AddMinutes(15),
                 System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
                 new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
