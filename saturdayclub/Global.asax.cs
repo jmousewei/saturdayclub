@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Threading;
+using System.Net;
 
 namespace saturdayclub
 {
@@ -39,20 +40,38 @@ namespace saturdayclub
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             //CreateCacheEntry();
+
+            HttpRuntime.Cache.Add(
+                "Watchdog",
+                DateTime.Now,
+                null,
+                DateTime.Now.AddSeconds(20),
+                System.Web.Caching.Cache.NoSlidingExpiration,
+                System.Web.Caching.CacheItemPriority.NotRemovable,
+                ReCreateCacheEntry);
         }
 
         internal static void CreateCacheEntry()
         {
-            if (HttpRuntime.Cache["ActivityWatchdog"] != null)
+            if (HttpRuntime.Cache["Watchdog"] != null)
                 return;
-            saturdayclub.Controllers.MsgController msg = new Controllers.MsgController();
-            Thread worker = new Thread(() =>
+            using (WebClient wc = new WebClient())
+            {
+                try
                 {
-                    msg.WebClientTest();
-                });
-            worker.IsBackground = true;
-            worker.Priority = ThreadPriority.Lowest;
-            worker.Start();
+                    wc.DownloadData("http://saturdayclubscrawl.apphb.com");
+                }
+                catch
+                { }
+            }
+            HttpRuntime.Cache.Add(
+                "Watchdog",
+                DateTime.Now,
+                null,
+                DateTime.Now.AddMinutes(15),
+                System.Web.Caching.Cache.NoSlidingExpiration,
+                System.Web.Caching.CacheItemPriority.NotRemovable,
+                ReCreateCacheEntry);
         }
 
         internal static void ReCreateCacheEntry(string key, object value, System.Web.Caching.CacheItemRemovedReason reason)
