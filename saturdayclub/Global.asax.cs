@@ -38,7 +38,7 @@ namespace saturdayclub
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            CreateCacheEntry();
+            //CreateCacheEntry();
         }
 
         internal static void CreateCacheEntry()

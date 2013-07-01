@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Net;
 using HtmlAgilityPack;
 using System.IO;
+using System.Xml.Linq;
 
 namespace saturdayclub.Controllers
 {
@@ -151,6 +152,30 @@ namespace saturdayclub.Controllers
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
         }
 
+        [ActionName("cache")]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult UpdateCache()
+        {
+            try
+            {
+                XDocument xdoc = XDocument.Load(this.Request.InputStream);
+                string value = xdoc.Element("xml").Element("content").DescendantNodes().OfType<XCData>().First().Value;
+                HttpRuntime.Cache.Insert(
+                    "Activities",
+                    new object[] { DateTime.UtcNow, value },
+                    null,
+                    System.Web.Caching.Cache.NoAbsoluteExpiration,
+                    System.Web.Caching.Cache.NoSlidingExpiration,
+                    System.Web.Caching.CacheItemPriority.NotRemovable,
+                    null);
+            }
+            catch
+            {
+                return new EmptyResult();
+            }
+            return Content("OK");
+        }
+
         //
         // GET: /Msg/
 
@@ -182,14 +207,19 @@ namespace saturdayclub.Controllers
                         var textMsg = xmlMsg as ClientTextMessage;
                         if (string.Compare(textMsg.Content, @"查活动", true) == 0)
                         {
-                            replyMsgContent = HttpRuntime.Cache["Activities"] as string;
+                            object[] cacheObj = HttpRuntime.Cache["Activities"] as object[];
+                            DateTime updateTime = DateTime.MinValue;
+                            if (cacheObj != null)
+                            {
+                                updateTime = (DateTime)cacheObj[0];
+                                replyMsgContent = cacheObj[1] as string;
+                            }
                             if (string.IsNullOrEmpty(replyMsgContent))
                             {
                                 replyMsgContent = "No activity.";
                             }
-                            DateTime utc = (DateTime)HttpRuntime.Cache["ActivityWatchdog"];
                             TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
-                            var time = TimeZoneInfo.ConvertTimeFromUtc(utc, tzi);
+                            var time = TimeZoneInfo.ConvertTimeFromUtc(updateTime, tzi);
                             replyMsgContent = "当前的活动列表: \r\n\r\n" + replyMsgContent + "\r\n此信息更新于: " + time;
                         }
                         else if (string.Compare(textMsg.Content, @"帮助", true) == 0)
