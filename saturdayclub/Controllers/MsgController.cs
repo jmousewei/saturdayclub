@@ -189,10 +189,32 @@ namespace saturdayclub.Controllers
                             StringBuilder sb = new StringBuilder();
                             sb.AppendLine(@"当前支持的功能：");
                             sb.AppendLine();
-                            sb.AppendLine(@"1. 直接发送‘帮助’获取当前可用功能列表和说明。");
-                            sb.AppendLine(@"2. 直接发送‘查活动’获取当前活动列表。活动列表每30分钟自动更新，所以您可能获取的不是最新的列表。");
-                            sb.AppendLine(@"3. 直接发送任意文字、基础表情获取系统测试性回复。");
+                            sb.AppendLine(@"1. 直接发送‘我是新人’获取欢迎信。");
+                            sb.AppendLine(@"2. 直接发送‘帮助’获取当前可用功能列表和说明。");
+                            sb.AppendLine(@"3. 直接发送‘查活动’获取当前活动列表。活动列表每30分钟自动更新，所以您可能获取的不是最新的列表。");
+                            sb.AppendLine(@"4. 直接发送任意文字、基础表情获取系统测试性回复。");
                             replyMsgContent = sb.ToString();
+                        }
+                        else if (string.Compare(textMsg.Content, @"我是新人", true) == 0)
+                        {
+                            replyMsgContent = @"<xml>
+ <ToUserName><![CDATA[{0}]]></ToUserName>
+ <FromUserName><![CDATA[{1}]]></FromUserName>
+ <CreateTime>{2}</CreateTime>
+ <MsgType><![CDATA[news]]></MsgType>
+ <ArticleCount>1</ArticleCount>
+ <Articles>
+ <item>
+ <Title><![CDATA[欢迎加入星期六测试计划]]></Title> 
+ <Description><![CDATA[欢迎加入星期六测试计划，本计划旨在为您提供基于圈网的微信服务。]]></Description>
+ <PicUrl><![CDATA[http://mmsns.qpic.cn/mmsns/6lTNibbOicPCG0QLEoz2icSXMtI8ET55lyCFx28e092TEqDEPm00YTNUA/0]]></PicUrl>
+ <Url><![CDATA[http://mp.weixin.qq.com/mp/appmsg/show?__biz=MjM5MDY4ODA3Mw==&appmsgid=10000006&itemidx=1&sign=c9f7aaeb46761ea5bd1b457b2169754e#wechat_redirect]]></Url>
+ </item>
+ </Articles>
+ <FuncFlag>1</FuncFlag>
+ </xml> ";
+                            replyMsgContent = string.Format(replyMsgContent, xmlMsg.From, xmlMsg.To, XmlMessage.Time());
+                            return Content(replyMsgContent);
                         }
                         else
                         {
