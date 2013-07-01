@@ -53,14 +53,6 @@ namespace saturdayclub
             worker.IsBackground = true;
             worker.Priority = ThreadPriority.Lowest;
             worker.Start();
-            HttpRuntime.Cache.Add(
-                "ActivityWatchdog",
-                DateTime.UtcNow,
-                null,
-                DateTime.Now.AddMinutes(5),
-                System.Web.Caching.Cache.NoSlidingExpiration,
-                System.Web.Caching.CacheItemPriority.Normal,
-                new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
         }
 
         private void ReCreateCacheEntry(string key, object value, System.Web.Caching.CacheItemRemovedReason reason)

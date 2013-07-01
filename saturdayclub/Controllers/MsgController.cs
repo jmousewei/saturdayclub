@@ -138,6 +138,14 @@ namespace saturdayclub.Controllers
                 System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
                 null);
+            HttpRuntime.Cache.Add(
+                "ActivityWatchdog",
+                DateTime.UtcNow,
+                null,
+                DateTime.Now.AddMinutes(5),
+                System.Web.Caching.Cache.NoSlidingExpiration,
+                System.Web.Caching.CacheItemPriority.Normal,
+                new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
 
             sw.Stop();
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);
