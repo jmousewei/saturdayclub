@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Threading;
 
 namespace saturdayclub
 {
@@ -45,12 +46,18 @@ namespace saturdayclub
             if (HttpRuntime.Cache["ActivityWatchdog"] != null)
                 return;
             saturdayclub.Controllers.MsgController msg = new Controllers.MsgController();
-            msg.WebClientTest();
+            Thread worker = new Thread(() =>
+                {
+                    msg.WebClientTest();
+                });
+            worker.IsBackground = true;
+            worker.Priority = ThreadPriority.Lowest;
+            worker.Start();
             HttpRuntime.Cache.Add(
                 "ActivityWatchdog",
                 DateTime.UtcNow,
                 null,
-                DateTime.Now.AddMinutes(30),
+                DateTime.Now.AddMinutes(5),
                 System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
                 new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
