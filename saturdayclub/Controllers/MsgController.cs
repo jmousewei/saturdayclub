@@ -145,7 +145,7 @@ namespace saturdayclub.Controllers
                 DateTime.Now.AddMinutes(15),
                 System.Web.Caching.Cache.NoSlidingExpiration,
                 System.Web.Caching.CacheItemPriority.Normal,
-                new System.Web.Caching.CacheItemRemovedCallback(ReCreateCacheEntry));
+                new System.Web.Caching.CacheItemRemovedCallback(SaturdayClubApplication.ReCreateCacheEntry));
 
             sw.Stop();
             return Content(sw.ElapsedMilliseconds + " ms.   " + replyMsg);

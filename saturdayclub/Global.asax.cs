@@ -41,7 +41,7 @@ namespace saturdayclub
             CreateCacheEntry();
         }
 
-        private void CreateCacheEntry()
+        internal static void CreateCacheEntry()
         {
             if (HttpRuntime.Cache["ActivityWatchdog"] != null)
                 return;
@@ -55,7 +55,7 @@ namespace saturdayclub
             worker.Start();
         }
 
-        private void ReCreateCacheEntry(string key, object value, System.Web.Caching.CacheItemRemovedReason reason)
+        internal static void ReCreateCacheEntry(string key, object value, System.Web.Caching.CacheItemRemovedReason reason)
         {
             if (reason == System.Web.Caching.CacheItemRemovedReason.Expired)
             {
